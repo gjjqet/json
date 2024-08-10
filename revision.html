@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSON.pare & JSON.stingify</title>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+
+            const name = '{"firstname":"aung","lastname":"kyaw","city":"Yangon"}';
+
+            const nameobj = JSON.parse(name);
+            
+            console.log(nameobj);
+            console.log(nameobj.firstname);
+            console.log(nameobj.lastname);
+            console.log(nameobj.city);
+
+            const staff = {
+                "firstname":"aung",
+                "lastname":"moe",
+                "city":"Pui"
+            }
+
+            console.log(staff.firstname,staff.lastname);
+
+            const staffstr = JSON.stringify(staff);
+
+            console.log(staffstr);
+            console.log(staffstr.firstname);
+
+        </script>
+        
+    </body>
+</html>
