@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jquery Ajax - Open Weather Map</title>
+    </head>
+    <body>
+
+        <!-- jquery  -->
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <!-- jquery -->
+
+        <script type="text/javascript">
+
+            let url = 'https://api.openweathermap.org/data/2.5/weather?lat=21.9532151&lon=96.0987311&appid=63b8c97568a630492f1f2768febbee8a';
+
+            // $.ajax({
+
+            //     method : 'GET',
+            //     url:url,
+            //     dataType:'json'
+
+            // }).done((data)=>{
+
+            //     console.log(data);
+
+            //     console.log(data);
+            //     console.log(data.weather); // Dot Notation
+            //     console.log(data.weather[0].main) ; // Dot Notation
+            //     console.log(data.weather[0]["main"]); // Bracket Notation
+
+            //     console.log(data.wind.speed); // Dot Notation
+            //     console.log(data.wind["speed"]); // Bracket Notation
+            //     console.log(data["wind"]["speed"]); // Bracket Notation
+
+            //     console.log(data.name);
+            //     console.log(data["name"]);
+
+            // }).fail(()=>{
+            //     console.log('Error');
+            // })
+
+            $.ajax({
+                method:'GET',
+                url:url,
+                dataType:'json',
+                success:(getdata)
+            });
+
+            function getdata(data,status,xhr){
+                console.log(data);
+
+                console.log(data);
+                console.log(data.weather); // Dot Notation
+                console.log(data.weather[0].main) ; // Dot Notation
+                console.log(data.weather[0]["main"]); // Bracket Notation
+
+                console.log(data.wind.speed); // Dot Notation
+                console.log(data.wind["speed"]); // Bracket Notation
+                console.log(data["wind"]["speed"]); // Bracket Notation
+
+                console.log(data.name);
+                console.log(data["name"]);
+
+                console.log(status);
+                console.log(xhr);
+            }
+
+        </script>
+        
+    </body>
+</html>

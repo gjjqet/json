@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Finder Revision</title>
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/d2e3c8879c.js" crossorigin="anonymous"></script>
+        
+        <style type="text/css">
+
+            body{
+                background-color: #f4f4f4;
+            }
+
+            *{
+                box-sizing: border-box;
+            }
+
+            body{
+                display: flex;
+                justify-content: center;
+            }
+
+            .container{
+                width: 1000px;
+        
+            }
+
+            .head{
+                text-align: center;
+            }
+
+            .img{
+                width: 200px;
+                height: 200px;
+                border: 5px solid #fff;
+            }
+
+            .img img{
+                width: 100%;
+                height: 100%;
+            }
+
+            input{
+                width: 400px;
+                padding: 10px 15px;
+                font-size: 15px;
+                outline: none;
+            }
+
+            .search-btn{
+                padding: 10px;
+                cursor: pointer;
+            }
+
+           .btn{
+                padding: 10px;
+                font-size: 15px;
+                margin-top: 10px;
+                cursor: pointer;
+           }
+
+           .inst{
+                text-align: justify;
+           }
+
+
+           .displaytwo{
+                display: grid;
+                grid-template-columns: repeat(5,1fr);
+                gap: 5px;
+                margin-top: 20px;
+           }
+
+           .displaytwo .foodresult{
+                width: 180px;
+                height: 180px;
+                border: 4px solid #fff;
+
+                position: relative;
+
+                text-align: center;
+                cursor: pointer;
+                
+           }
+
+           .foodresult img{
+                width: 100%;
+                height: 100%;
+           }
+
+           .foodresult .name{
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.8);
+
+                position: absolute;
+                left: 0%;
+                top: 0%;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-size: 17px;
+                font-weight: bold;
+                
+                opacity: 0;
+
+                transition: apacity 0.5 ease-in;
+           }
+
+           .foodresult .name:hover{
+                opacity: 0.8;
+               
+           }
+
+         
+          .displaytwo h1{
+                width: 360px;
+                margin-left: 500px;
+                text-align: center;
+
+                transform: translate(-50%);
+          }
+
+        </style>
+
+    </head>
+    <body>
+
+        <div>
+
+            <div class="container">
+
+                <div class="head">
+                    <h1>Food Finder</h1>
+                    <form id="form" action="" method="">
+
+                        <div class="form-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search..." />
+                            <button type="submit" class="search-btn"><i class="fas fa-search"></i>Search</button>
+                        </div>
+
+                    </form>
+                    <button type="button" class="btn">Get Random Food</button>
+                </div>
+
+                <div class="header"></div>
+                <div class="displayone"></div>
+                <div class="displaytwo"></div>
+
+            </div>
+
+        </div>
+
+        <!-- Axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <script type="text/javascript">
+
+            const getrandombtn = document.querySelector(".btn");
+            const getdisplayone = document.querySelector(".displayone");
+
+            const getform = document.querySelector("#form");
+            const getinput = document.querySelector(".form-control");
+            const getdisplaytwo = document.querySelector(".displaytwo");
+
+
+            getrandombtn.addEventListener('click',()=>{
+
+                getdisplaytwo.innerHTML = "";
+                let url = "https://www.themealdb.com/api/json/v1/1/random.php";
+
+                fetch(url).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    // console.log(data.meals[0]);
+                    let food = data.meals[0];
+                    // console.log(food);
+
+                    setdisplay(food);
+
+                }).catch((error)=>{
+                    console.log(error);
+                })
+
+            })
+
+            function setdisplay(meal){
+                    console.log(meal)
+
+                    // console.log(meal.strCategory);
+                    // console.log(meal.strMealThumb);
+                    // console.log(meal.strArea);
+                    // console.log(meal.strInstructions);
+                    // console.log(meal.strIngredient1);
+                    // console.log(meal.strMeasure1);
+
+                    const ingredients = [];
+
+                    for(let x=0 ; x <= 20 ; x++){
+                       
+                        if(meal[`strIngredient${x}`]){
+                            ingredients.push(`${meal[`strIngredient${x}`]} = ${meal[`strMeasure${x}`]}`);
+                        }
+
+                    }
+
+
+                    let html = `
+                            <h3>${meal.strCategory}</h3>
+                            <div class='img'>
+                                <img src="${meal.strMealThumb}" />
+                            </div>
+                            <h4>${meal.strArea}</h4>
+                            <p class='inst'>${meal.strInstructions}</p>
+                            <h3>Main Ingredients</h3>
+                            <ol>
+                                ${ingredients.map(ingredient=>`<li>${ingredient}</li>`).join("")}
+                            </ol>
+                    `;
+
+                    getdisplayone.innerHTML = html;
+
+                }
+
+            getform.addEventListener("submit",(e)=>{
+
+                getdisplayone.innerHTML = "";
+                let getval = getinput.value;
+
+
+                // console.log(getval.trim());
+
+                if(getval){
+
+                    getval = getval.trim();
+
+                    let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getval}`;
+
+                    axios({
+                        url:url,
+                        method:"GET"
+                    }).then((response)=>{
+                        // console.log(response.data.meals);
+                        const lists = response.data.meals;
+                        console.log(lists);
+
+                       if(lists === null){
+
+                           getdisplaytwo.innerHTML = "";
+                           getdisplaytwo.innerHTML = `<h1 class='again'>There is no datas . Try Again !!!</1>`;
+
+                       }else{
+
+                        let html =`
+                            ${lists.map(list=>`
+                                <div class="foodresult"}>
+                                    <img src="${list.strMealThumb}" class='imageinfo'/>
+                                    <div class='name' getid=${list.idMeal}>
+                                        <p getid=${list.idMeal}>${list.strMeal}</p>
+                                    </div>
+                                </div>
+                            `).join("")}
+                        `;
+
+                     
+
+                        getdisplaytwo.addEventListener("click",function(e){
+                           
+                           let id = e.target.getAttribute("getid");
+
+                           let url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+
+                          const testfun = async function(){
+                            const response = await fetch(url);
+                            const data = await response.json();
+
+                            let getdata = data.meals[0];
+
+                            setdisplay(getdata);
+                          }
+
+                          testfun().catch((error)=>{
+                            console.log(error)
+                          })
+                           
+                        })
+              
+
+
+
+
+                     
+                        getdisplaytwo.innerHTML = html;
+
+                       }
+
+
+                    }).catch((error)=>{
+                        console.log(error);
+                    })
+
+                }else{
+                    window.alert("you need to type something");
+                }
+
+                getinput.value = '';
+                getinput.focus();
+              
+               e.preventDefault();
+            })
+
+        </script>
+    </body>
+</html>

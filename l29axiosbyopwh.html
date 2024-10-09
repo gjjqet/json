@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jquery Ajax - Open Weather Map</title>
+    </head>
+    <body>
+
+        <!-- axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+         <!-- axios -->
+       
+        <script type="text/javascript">
+
+          let url = 'https://api.openweathermap.org/data/2.5/weather?lat=21.9532151&lon=96.0987311&appid=63b8c97568a630492f1f2768febbee8a';
+
+          axios.get(url)
+                .then((response)=>{
+                    console.log(response.data);
+
+                    console.log(response.data.weather); // Dot Notation
+                    console.log(response.data.weather[0].main) ; // Dot Notation
+                    console.log(response.data.weather[0]["main"]); // Bracket Notation
+
+                    console.log(response.data.wind.speed); // Dot Notation
+                    console.log(response.data.wind["speed"]); // Bracket Notation
+                    console.log(response.data["wind"]["speed"]); // Bracket Notation
+
+                    console.log(response.data.name);
+                    console.log(response.data["name"]);
+                
+
+                }).catch((err)=>{
+                    console.log(err)
+                })
+
+
+        </script>
+        
+    </body>
+</html>

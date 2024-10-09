@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jquery Ajax - Chuck Norris</title>
+
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                padding: 10px;
+                background-color: #f4f4f4;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="display"></div>
+            <button class="btn">Click Me</button>
+        </div>
+
+          <!-- jquery  -->
+          <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+          <!-- jquery -->
+
+          <script type="text/javascript">
+
+            const getbtn = document.querySelector(".btn");
+            const getdisplay = document.querySelector(".display");
+
+            getbtn.addEventListener("click",loaddata);
+
+            function loaddata(){
+
+                let url = 'https://dummyjson.com/products';
+
+                // $.ajax({
+                //     method:'GET',
+                //     url:url,
+                //     dataType:'json'
+                // }).done((data)=>{
+                //     console.log(data.products);
+
+                //     data.products.forEach((product)=>{
+
+                //         // console.log(product);
+
+                //         console.log(product.id,product.title,product.price);
+
+                //     })
+
+                // }).fail(()=>{
+                //     console.log("Error")
+                // })
+
+                $.ajax({
+                    method:"GET",
+                    url:url,
+                    dataType:'json',
+                    success:(getdata)
+                })
+
+                function getdata(data,status,xhr){
+
+                    console.log(data.products);
+
+                    data.products.forEach((product)=>{
+                        console.log(product.id,product.title,product.price);
+                    })
+
+                    console.log(status);
+                    console.log(xhr)
+
+                }
+
+            }
+          
+
+          </script>
+        
+    </body>
+</html>

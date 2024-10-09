@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - chunk norris jokes api</title>
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                background-color: #f4f4f4;
+                padding: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="display"></div>
+            <button type="button" id="btn">Load Data</button>
+        </div>
+        
+        <script type="text/javascript">
+
+            const getbtn = document.getElementById("btn");
+            const getdiplay = document.getElementById('display');
+
+            getbtn.addEventListener("click",function(){
+                let xmlhttp = new XMLHttpRequest();
+
+                xmlhttp.open("GET","https://api.chucknorris.io/jokes/random");
+                xmlhttp.send();
+
+                xmlhttp.onreadystatechange = function(){
+
+                    if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+
+                        let result = xmlhttp.responseText;
+
+                        result = JSON.parse(result);
+
+                        console.log(result);
+
+                        let html = `<img src=${result.icon_url}/>
+                                    <h3>${result.value}</h3>
+                        `;
+
+                        getdiplay.innerHTML = html;
+
+                    }
+
+                }
+
+                xmlhttp.onprogress = function(){
+                    console.log("On Progress",xmlhttp.readyState,xmlhttp.status);
+                }
+
+                xmlhttp.onload = function(){
+                    console.log("On Load",xmlhttp.readyState,xmlhttp.status);
+                }
+               
+            })
+        
+        </script>
+
+    </body>
+</html>
+
+
+

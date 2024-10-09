@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - IP Registry</title>
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                background-color: #f4f4f4;
+                padding: 10px;
+            }
+
+            ul{
+                list-style-type: none;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="display"></div>
+            <button type="button" id="btn">Click Me</button>
+        </div>
+        
+        <script type="text/javascript">
+
+            
+            const getdisplay = document.getElementById("display");
+            const getbtn = document.getElementById("btn");
+
+            getbtn.addEventListener("click",function(){
+                loaddata();
+            });
+
+            function loaddata(){
+
+                        const url = "https://api.ipregistry.co?key=d0zl6y5r2o1lstqy";
+
+                        fetch(url)
+                        .then(response=>response.json())
+                        .then(data => {
+                            console.log("apple");
+                            console.log(data);
+
+                            console.log(data);
+
+                        console.log(data.location.country.capital);
+                        console.log(data.currency.name);
+                        console.log(data.location.language.name);
+                        console.log(data.user_agent.os.name);
+                        console.log(data.location.latitude);
+                        console.log(data.location.longitude);
+
+                        let html = `
+                                    <ul>
+                                        <li>Captical = ${data.location.country.name}</li>
+                                        <li>Currency = ${data.currency.name}</li>
+                                        <li>Latitude = ${data.location.latitude}</li>
+                                        <li>Longitude = ${data.location.longitude}</li>
+                                        <li>Language = ${data.location.language.name}<li>
+                                        <li>OS = ${data.user_agent.os.name}</li>
+                                        <li>Flag = ${data.location.country.flag.emoji}</li>
+                                    </ul>
+                        `;
+
+                        getdisplay.innerHTML = html;
+
+
+                        });        
+                }
+
+                
+        
+
+        </script>
+
+    </body>
+</html>
+
+
+<!-- 
+
+Local IP 
+    (i)Dynamite IP
+    (ii) Fixed IP / Static IP
+
+External IP
+    (i)Publick ip / Dynamite IP
+    (ii) Fixed IP / Static IP
+
+-->
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - Open Weather Map</title>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+
+            const latitude = "21.9466084";
+            const longitude = "96.1042852";
+            const key = "63b8c97568a630492f1f2768febbee8a";
+            let url = `https://api.openweathermap.org/data/2.5/weather?lat=21.9466084&lon=96.1042852&appid=63b8c97568a630492f1f2768febbee8a`;
+
+            fetch(url).then(response=>response.json()).then(data=>{
+                console.log(data);
+
+            })
+
+            fetch(url).then(function(response){
+                return response.json();
+            }).then(function(data){
+                console.log(data);
+                console.log(typeof data);
+
+                // Dot Notation 
+                // Bracket Notation 
+
+                console.log(data);
+                console.log(data.weather); // Dot Notation
+                console.log(data.weather[0].main) ; // Dot Notation
+                console.log(data.weather[0]["main"]); // Bracket Notation
+
+                console.log(data.wind.speed); // Dot Notation
+                console.log(data.wind["speed"]); // Bracket Notation
+                console.log(data["wind"]["speed"]); // Bracket Notation
+
+                console.log(data.name);
+                console.log(data["name"]);
+                
+
+            }).catch(function(err){
+                console.log(err);
+            })
+
+            
+
+            
+        </script>
+
+    </body>
+</html>

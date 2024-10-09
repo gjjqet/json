@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - chunk norris jokes api</title>
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                background-color: #f4f4f4;
+                padding: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="display"></div>
+            <button type="button" id="btn">Load Data</button>
+        </div>
+        
+        <script type="text/javascript">
+
+            const getbtn = document.getElementById("btn");
+            const getdiplay = document.getElementById('display');
+
+            getbtn.addEventListener("click",function(){
+
+                const url = "https://api.chucknorris.io/jokes/random";
+
+                fetch(url).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    console.log(data);
+
+
+                    let html = `<img src=${data.icon_url}/>
+                                        <h3>${data.value}</h3>
+                            `;
+
+                            getdiplay.innerHTML = html;
+
+                }).catch(function(err){
+                    console.log(err);
+                })
+
+                            })
+                        
+        </script>
+
+    </body>
+</html>
+
+
+

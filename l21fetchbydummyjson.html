@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - Dummy Json</title>
+        <style type="text/css">
+            
+            body{
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                background-color: #f4f4f4;
+                padding: 10px;
+                
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="display"></div>
+            <button type="button" id="btn">Load Data</button>
+        </div>
+        
+        <script type="text/javascript">
+
+            const getbtn = document.getElementById("btn");
+            const getdiplay = document.getElementById('display');
+
+            getbtn.addEventListener("click",function(){
+                loaddata();
+            })
+
+            function loaddata(){
+
+                let url = "https://dummyjson.com/products";
+
+                fetch(url).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    // console.log(data.products);
+
+                    data.products.forEach(function(product){
+                        // console.log(product);
+
+                        console.log(product.id,product.title,product.price)
+                    })
+                   
+                }).catch(function(error){
+                    console.log(error);
+                })  
+
+            }
+        
+                
+            
+        </script>
+
+    </body>
+</html>
+

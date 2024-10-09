@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Git Hub Revision</title>
+        <!-- bootstrap css js1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                background-color: #f4f4f4;
+            }
+
+            .container{
+                width: 600px;
+            }
+
+            .container .card-body img{
+                width: 120px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="card rounded-0">
+
+                <div class="card-header">
+                    <form id="form" action="" method="">
+                        <div class="form-group">
+                            <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Search..." autocomplete="off" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="displayone">
+
+                        <!-- <img src="./../zhao.jpg" alt="userphoto" class="rounded-circle mb-3" />
+                        <h3>User Name</h3>
+                        <p>Bio</p>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">Repositories : <span class="fw-bold">15</span></li>
+                            <li class="list-group-item">Followers : <span class="fw-bold">20</span></li>
+                            <li class="list-group-item">Followings : <span class="fw-bold">15</span></li>
+                        </ul> -->
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+
+                    <div class="displaytwo">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-success dropdown-toggle float-end rounded-0" data-bs-toggle="dropdown">Repositories</button>
+                            <ul id="lists" class="dropdown-menu">
+                                <!-- <li><a href="javascript:void(0);" class="dropdown-item">Sample Link</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item">Sample Link</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item">Sample Link</a></li> -->
+                            </ul>
+                        </div>                        
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- bootstrap css1 js1 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+        <script type="text/javascript">
+
+            const getform = document.getElementById("form");
+            const getsearch = document.querySelector(".form-control");
+            const getdisplayone = document.querySelector(".displayone");
+            const getdisplaytwo = document.querySelector(".displaytwo");
+
+            const getlists = document.getElementById("lists");
+
+            getform.addEventListener("submit",function(e){
+
+                e.preventDefault();
+                let getval = getsearch.value;
+
+                if(getval){
+
+                    getval = getval.trim();
+
+                    getname(getval);
+                    getsearch.value = "";
+                    getsearch.focus();
+
+                }else{
+                    window.alert("you need to search something!!");
+                }
+               
+              
+            })
+
+            getname("datalandtechnology");
+
+            function getname(name){
+                // console.log(name);
+
+                let url = `https://api.github.com/users/`;
+
+                $.ajax({
+                    url:url+name,
+                    method:"GET",
+                    dataType:'json'
+                }).done((response)=>{
+
+                    // console.log(response);
+
+                       const data = response;
+
+                        getdisplayone.innerHTML = `
+                        <img src="${data.avatar_url}" class='rounded-circle mb-3' />
+                        <h3>${data.name}</h3>
+                        <p>${data.bio}</p>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">Repositories : <span class="fw-bold">${data.public_repos}</span></li>
+                            <li class="list-group-item">Followers : <span class="fw-bold">${data.followers}</span></li>
+                            <li class="list-group-item">Followings : <span class="fw-bold">${data.following}</span></li>
+                        </ul>
+                    `;
+
+                    fortwo(name);
+   
+                }).fail((error)=>{
+                    // console.log(error);
+                    if(error.status === 404){
+                        // console.log("there is no data");
+                        getdisplayone.innerHTML = `<div class='alert alert-danger text-center'>There is no data !!!</div>`;
+                        getlists.innerHTML = `<li><a href="javascript:void(0);" class="dropdown-item">No Data</a></li>`
+                    }
+                })
+
+                getdisplayone.innerHTML = `
+                     <img src="${name.avatar_url}" />
+                        <h3>${name.name}</h3>
+                        <p>${name.bio}</p>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">Repositories : <span class="fw-bold">${name.public_repos}</span></li>
+                            <li class="list-group-item">Followers : <span class="fw-bold">${name.followers}</span></li>
+                            <li class="list-group-item">Followings : <span class="fw-bold">${name.following}</span></li>
+                        </ul>
+                `;
+
+
+                function fortwo(name){
+
+                    getlists.innerHTML = "";
+
+                    let repositories = url + name + "/repos";
+                   
+                    fetch(repositories)
+                        .then((response)=>{
+                            return response.json();
+                        })
+                        .then((data)=>{
+
+                            const repos = data;
+
+                            console.log(repos);
+                            
+                            // getlists.innerHTML = `${repos.map(repo=>`<li><a href="${repo.archive_url}" class="dropdown-item">${repo.name}</a></li>`).join("")}`;
+
+                            repos.forEach((repo)=>{
+                                getlists.innerHTML += `<li><a href="${repo.archive_url}" class="dropdown-item">${repo.name}</a></li>`;
+                            })
+                            
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+
+                }           
+
+
+            }
+
+
+           
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request by AJAX - Randomuser.me</title>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+
+            let uri = 'https://randomuser.me/api/';
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.open("GET",uri,false); // false mean no synchronize
+            xmlhttp.send();
+
+            // console.log(xmlhttp);
+
+            let result;
+            if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+                result = xmlhttp.responseText;
+            }
+
+            // console.log(typeof result);
+
+            result = JSON.parse(result);
+            // console.log(typeof result);
+
+            console.log(result.results[0]);
+            console.log(result.results[0].gender);
+            console.log(result.results[0].location.street.name);
+            console.log(result.results[0].phone);
+            
+        </script>
+
+    </body>
+</html>
+

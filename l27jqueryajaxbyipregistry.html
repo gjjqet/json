@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jquery Ajax - Chuck Norris</title>
+
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container{
+                width: 300px;
+                padding: 10px;
+                background-color: #f4f4f4;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="display"></div>
+            <button class="btn">Click Me</button>
+        </div>
+
+          <!-- jquery  -->
+          <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+          <!-- jquery -->
+
+          <script type="text/javascript">
+
+            const getbtn = document.querySelector(".btn");
+            const getdisplay = document.querySelector(".display");
+
+            getbtn.addEventListener("click",loaddata);
+
+            function loaddata(){
+
+                let url = 'https://api.ipregistry.co?key=565597w3nfrb3w6x';
+
+                $.get(url,(data)=>{
+                    console.log(data);
+
+
+                    let html = `
+                                    <ul>
+                                        <li>Captical = ${data.location.country.name}</li>
+                                        <li>Currency = ${data.currency.name}</li>
+                                        <li>Latitude = ${data.location.latitude}</li>
+                                        <li>Longitude = ${data.location.longitude}</li>
+                                        <li>Language = ${data.location.language.name}</li>
+                                        <li>OS = ${data.user_agent.os.name}</li>
+                                        <li>Flag = ${data.location.country.flag.emoji}</li>
+                                    </ul>
+                        `;
+
+                        getdisplay.innerHTML = html;
+
+
+                });
+
+                
+              
+            }
+          
+
+          </script>
+        
+    </body>
+</html>
