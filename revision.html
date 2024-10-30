@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Weather Forecast Rev</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <script src="https://kit.fontawesome.com/d2e3c8879c.js" crossorigin="anonymous"></script>
+
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .citycontainer{
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .city{
+                font-size:35px;
+                font-weight: 400;
+                text-transform: capitalize;
+            }
+
+            .deg{
+                font-size: 50px;
+            }
+
+            .day{
+                font-size: 30px;
+                font-weight: 400px;
+                margin-bottom: 20px;
+            }
+
+            .seconday{
+                font-size: 30px;
+            }
+
+
+            .daydeg{
+                font-size: 30px;
+                font-weight: 700;
+            }
+
+            .weather{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .weathercontainer{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 50px;
+            }
+
+            .weather i{
+                font-size: 35px;
+            }
+
+            .nodata{
+                color: red;
+                text-align: center;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="col-md-10 mx-auto">
+
+                <div class="card rounded-0">
+
+                    <div class="card-header">
+                        <form action="" method="" id="form">
+
+                            <input type="text" name="search" id="search" class="form-control form-control-sm input" placeholder="Search by City ..." spellcheck="false">
+
+                        </form>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div>
+
+                            <div class="citycontainer">
+                                <div class="city">Bago</div>
+                                <h1 class=""><span class="deg">+38</span>&deg;C</h1>
+                            </div>
+
+                            <div>
+                                <div class="day">Sunday</div>
+                                <p>Humidity : <span class="humdata">58 </span> &deg; C</p>
+                                <p>Wind : <span class="windata">50</span>m/s</p>
+                                <p>Pressur : <span class="pressdata">1050</span>hPa</p>
+                            </div>
+
+                        </div>
+
+                       <div class="weathercontainer">
+
+                            <div class="weather">
+
+                                <i class="fa-solid fa-cloud-rain"></i>
+                                <div class="monday seconday">Monday</div>
+                                <div class="daydeg"><span class="mondata">+20</span> &deg;C</div>
+
+                            </div>
+
+                            <div class="weather">
+
+                                <i class="fa-solid fa-cloud-rain"></i>
+                                <div class="seconday tueday">Tueday</div>
+                                <div class="daydeg"><span class="mondata">+20</span> &deg;C</div>
+                            </div>
+
+                            <div class="weather">
+
+                                <i class="fa-solid fa-cloud-rain"></i>
+                                <div class="seconday wedday">Wednesday</div>
+                                <div class="daydeg"><span class="mondata">+20</span> &deg;C</div>
+                            </div>
+
+                            <div class="weather">
+
+                                <i class="fa-solid fa-cloud-rain"></i>
+                                <div class="seconday thuday">Thuday</div>
+                                <div class="daydeg"><span class="mondata">+20</span> &deg;C</div>
+                            </div>
+
+                            <div class="weather">
+
+                                <i class="fa-solid fa-cloud-rain"></i>
+                                <div class="seconday">Friday</div>
+                                <div class="daydeg"><span class="mondata">+20</span> &deg;C</div>
+                            </div>
+
+                       </div>
+
+                    </div>
+
+                    <div class="fornodata"></div>
+
+               
+                </div>
+
+            </div>
+
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+
+            const getform = document.getElementById("form");
+            const getinput = document.querySelector(".input");
+            const getcity = document.querySelector(".city");
+            const getdeg = document.querySelector(".deg");
+            const getday = document.querySelector(".day");
+
+            const gethum = document.querySelector(".humdata");
+            const getwind = document.querySelector(".windata");
+            const getpress = document.querySelector(".pressdata");
+
+            const fornodata = document.querySelector(".fornodata");
+
+            const getcardbody = document.querySelector(".card-body");
+
+            const getdate = new Date();
+            const day = getdate.getDay();
+            let today;
+
+            console.log(day);
+
+            if(day === 0){
+                today = "Sunday";
+            }else if(day === 1){
+                today = "Monday";
+            }else if(day === 2){
+                today = "Tueday";
+            }else if(day === 3){
+                today = "Wednesday";
+            }else if(day === 4){
+                today = "Thusday";
+            }else if(day === 5){
+                today = "Friday"
+            }else{
+                today = "Sunday";
+            }
+
+            getday.textContent = today;
+
+            const key = "63b8c97568a630492f1f2768febbee8a";
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=bago&units=metric&appid=${key}`;
+
+
+
+            const before = async()=>{
+                const first = await fetch(url);
+                const response = await first.json();
+                const data = response;
+
+                return data;
+            }
+
+            before().then((data)=>{
+                const gettemp = Math.floor(data.main.temp);
+                const humidity = data.main.humidity;
+                const wind = data.wind.speed;
+                const pressure = data.main.pressure;
+
+
+                getdeg.textContent = gettemp;
+                gethum.textContent = humidity;
+                getwind.textContent = wind;
+                getpress.textContent = pressure;
+
+                let geticon = data.weather[0].icon;
+
+                const lat = data.coord.lat;
+                const lon = data.coord.lon;
+
+                console.log(lat,lon);
+
+                let url = `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=63b8c97568a630492f1f2768febbee8a`;
+            
+
+            }).catch((error)=>{
+                console.log(error)
+            });
+
+
+
+
+
+
+
+
+          
+            getform.addEventListener("submit",function(e){
+
+                e.preventDefault();
+
+                const inputval = getinput.value;
+
+                const realcity = inputval.toLowerCase();
+
+                console.log(realcity);
+
+                
+                let url = `https://api.openweathermap.org/data/2.5/weather?q=${realcity}&units=metric&appid=${key}`;
+
+               
+                try{
+
+                    const getweather = async()=>{
+
+                        const firststep = await fetch(url);
+
+                        const response = await firststep.json();
+
+                        const getdata = response;
+
+                        return getdata;
+
+                    }
+
+                    getweather().then((data)=>{
+
+                        if(data.cod === "404"){
+
+                            console.log("fail");
+
+                            getcardbody.style.display = "none";
+                            
+                            fornodata.innerHTML = `
+                                       <h1 class="nodata">There no data for ${inputval}</h1>
+                            `;
+
+
+                        }else{
+                            console.log(data);
+
+                            fornodata.innerHTML = "";
+                            getcardbody.style.display = "block";
+
+                            const gettemp = Math.floor(data.main.temp);
+                            const humidity = data.main.humidity;
+                            const wind = data.wind.speed;
+                            const pressure = data.main.pressure;
+
+
+                            getcity.textContent = inputval;
+
+
+                            gethum.textContent = humidity;
+                            getwind.textContent = wind;
+                            getpress.textContent = pressure;
+                            getdeg.textContent = gettemp;
+
+                        }
+
+
+
+
+                    }).catch((error)=>{
+                        console.log(error);
+                    })
+
+                    getinput.value = "";
+                    getinput.focus();
+                       
+
+                }catch(error){
+                    console.log("hi i am error");
+                }
+
+        
+            
+
+            });
+
+        </script>
+
+    </body>
+</html>

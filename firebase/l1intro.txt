@@ -1,0 +1,31 @@
+https://firebase.google.com 
+
+Click to Go to console  > Create a project 
+
+project name(My First Project) 
+
+term = checked 
+confirm = checked 
+
+Click continue
+
+Enable Google Analytics for this project = unchecked 
+click create project > continue
+
+
+
+
+=> Register An App For Web 
+
+Click </> web icon
+Register App = My First App For Web 
+Also setup hostion  = unchecked 
+Click "Register App" 
+Click "Continue to Console" 
+
+
+
+=> Get Firebase SDK code (Software Development Kit) 
+
+Click leftsidebar "Project Overview" > Project Setting > You can see your app code
+
